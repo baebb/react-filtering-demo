@@ -5,8 +5,7 @@ import About from './containers/about';
 import Home from './containers/home';
 
 export default (
-  <div>
-    <h1>vodafone-react-challenge</h1>
+  <div className="container">
     <Route exact path="/" component={Home}/>
     <Route path="/about" component={About}/>
   </div>
