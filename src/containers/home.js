@@ -2,6 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 
+import {getCountries} from '../actions/index';
+
 
 class Home extends React.Component {
   constructor(props) {
@@ -12,6 +14,16 @@ class Home extends React.Component {
       selectedOrder: '',
       searchText: ''
     }
+  }
+  
+  componentDidMount() {
+    this.props.dispatch(getCountries());
+  }
+  
+  renderCountryList(item) {
+    return (
+      <option key={item} value={item}>{item}</option>
+    )
   }
   
   handleChange(e) {
@@ -39,7 +51,7 @@ class Home extends React.Component {
                     onChange={this.handleChange.bind(this)}
                   >
                     <option value="all">Show all</option>
-                    <option value="other">...</option>
+                    {this.props.countryList.map(this.renderCountryList)}
                   </FormControl>
                 </FormGroup>
               </div>
@@ -85,4 +97,10 @@ class Home extends React.Component {
   }
 }
 
-export default connect()(Home);
+function mapStateToProps(state) {
+  return {
+    countryList: state.data.countryList
+  }
+}
+
+export default connect(mapStateToProps, null)(Home);

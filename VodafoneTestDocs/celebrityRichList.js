@@ -1,4 +1,4 @@
-{
+export default {
   "pageTitleH1": "Technical Test",
   "pageTitleH2": "Celebrity Rich List",
   "description": "A list of the Top 50 Richest Celebrities of 2014",
