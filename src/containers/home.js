@@ -1,9 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
+import {Row, Col, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 
 import CelebrityList from '../components/celebrity-item'
-import {getCountries, getCelebs} from '../actions/index';
+import {getCountries, getCelebs, getCurrencyRates} from '../actions/index';
 
 
 class Home extends React.Component {
@@ -19,6 +19,7 @@ class Home extends React.Component {
   
   componentDidMount() {
     this.props.dispatch(getCountries());
+    this.props.dispatch(getCurrencyRates());
     this.props.dispatch(getCelebs());
   }
   
@@ -35,17 +36,16 @@ class Home extends React.Component {
   }
   
   render() {
-    // console.log(this.state);
     return (
-      <div className="row">
-        <div className="col-xs-12 col-md-6 col-md-offset-3">
+      <Row>
+        <Col xs={12} sm={6} smOffset={3}>
           <div className="title text-center">
             <h1>Vodafone Technical Test</h1>
             <h2>Celebrity Rich List</h2>
           </div>
           <form>
-            <div className="row">
-              <div className="col-xs-12 col-md-6">
+            <Row>
+              <Col xs={12} sm={6}>
                 <FormGroup controlId="selectedBirthplace">
                   <ControlLabel>Birthplace:</ControlLabel>
                   <FormControl
@@ -57,8 +57,8 @@ class Home extends React.Component {
                     {this.props.countryList.map(this.renderCountryList)}
                   </FormControl>
                 </FormGroup>
-              </div>
-              <div className="col-xs-12 col-md-6">
+              </Col>
+              <Col xs={12} sm={6}>
                 <FormGroup controlId="selectedCurrency">
                   <ControlLabel>Currency Converter:</ControlLabel>
                   <FormControl
@@ -67,19 +67,20 @@ class Home extends React.Component {
                     onChange={this.handleChange.bind(this)}
                   >
                     <option value="usd">US Dollar</option>
-                    <option value="other">...</option>
+                    <option value="euro">Euro</option>
+                    <option value="aud">AU Dollar</option>
                   </FormControl>
                 </FormGroup>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-xs-12 col-md-6">
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12} sm={6}>
                 <FormGroup controlId="searchText">
                   <ControlLabel>Search:</ControlLabel>
                   <FormControl type="text" placeholder="Search" onChange={this.handleChange.bind(this)}/>
                 </FormGroup>
-              </div>
-              <div className="col-xs-12 col-md-6">
+              </Col>
+              <Col xs={12} sm={6}>
                 <FormGroup controlId="selectedOrder">
                   <ControlLabel>Order by:</ControlLabel>
                   <FormControl
@@ -92,18 +93,19 @@ class Home extends React.Component {
                     <option value="name">Name</option>
                   </FormControl>
                 </FormGroup>
-              </div>
-            </div>
+              </Col>
+            </Row>
           </form>
           <CelebrityList
             celebrities={this.props.celebrityList}
             countryFilter={this.state.selectedBirthplace}
-            nameFilter={this.state.searchText}
+            textFilter={this.state.searchText}
             sortBy={this.state.selectedOrder}
+            currency={this.state.selectedCurrency}
+            currencyRate={this.props.currencyRates[this.state.selectedCurrency]}
           />
-          {/*{this.props.celebrityList.map(this.renderCelebrity)}*/}
-        </div>
-      </div>
+        </Col>
+      </Row>
     )
   }
 }
@@ -111,7 +113,8 @@ class Home extends React.Component {
 function mapStateToProps(state) {
   return {
     countryList: state.data.countryList,
-    celebrityList: state.data.celebrityList
+    celebrityList: state.data.celebrityList,
+    currencyRates: state.data.currencyRates
   }
 }
 

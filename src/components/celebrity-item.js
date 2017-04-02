@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default ({celebrities, countryFilter, nameFilter, sortBy}) => {
+export default ({celebrities, countryFilter, textFilter, sortBy, currency, currencyRate = 1}) => {
   return (
     <div className="list-group">
       { celebrities
@@ -8,7 +8,11 @@ export default ({celebrities, countryFilter, nameFilter, sortBy}) => {
           celebrity.country.indexOf(countryFilter) > -1
         )
         .filter((celebrity) =>
-          celebrity.name.toLowerCase().indexOf(nameFilter) > -1
+          Object.values(celebrity).some(value =>
+            value.toString()
+              .toLowerCase()
+              .indexOf(textFilter) > -1
+          )
         )
         .sort((a, b) => {
           if (sortBy === 'name') {
@@ -33,7 +37,18 @@ export default ({celebrities, countryFilter, nameFilter, sortBy}) => {
                 <h4 className="list-group-item-heading">
                   {celebrity.name}
                 </h4>
-                <p className="list-group-item-text">Networth: {celebrity.netWorth.toLocaleString()}</p>
+                <p className="list-group-item-text">
+                  Networth:
+                  {
+                    currency === 'aud' ? ' $AUD'
+                      : currency === 'euro' ? ' €'
+                        : ' $USD'
+                  }
+                  {
+                    Number((celebrity.netWorth / currencyRate)
+                    .toFixed(0))
+                    .toLocaleString()
+                  }</p>
                 <p className="list-group-item-text">Age: {celebrity.age}</p>
                 <p className="list-group-item-text">Birthplace: {celebrity.country}</p>
               </div>
