@@ -1,12 +1,15 @@
 import React from 'react';
 
-export default ({celebrities, countryFilter}) => {
+export default ({celebrities, countryFilter, nameFilter}) => {
   console.log(countryFilter);
   return (
     <div className="list-group">
       { celebrities
         .filter((celebrity) =>
           celebrity.country.indexOf(countryFilter) > -1
+        )
+        .filter((celebrity) =>
+          celebrity.name.toLowerCase().indexOf(nameFilter) > -1
         )
         .map((celebrity, i) =>
           <div key={i} className="list-group-item">

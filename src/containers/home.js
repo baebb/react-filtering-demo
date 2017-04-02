@@ -94,7 +94,11 @@ class Home extends React.Component {
               </div>
             </div>
           </form>
-          <CelebrityList celebrities={this.props.celebrityList} countryFilter={this.state.selectedBirthplace}/>
+          <CelebrityList
+            celebrities={this.props.celebrityList}
+            countryFilter={this.state.selectedBirthplace}
+            nameFilter={this.state.searchText}
+          />
           {/*{this.props.celebrityList.map(this.renderCelebrity)}*/}
         </div>
       </div>
