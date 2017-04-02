@@ -2,7 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 
-import {getCountries} from '../actions/index';
+import CelebrityList from '../components/celebrity-item'
+import {getCountries, getCelebs} from '../actions/index';
 
 
 class Home extends React.Component {
@@ -18,6 +19,7 @@ class Home extends React.Component {
   
   componentDidMount() {
     this.props.dispatch(getCountries());
+    this.props.dispatch(getCelebs());
   }
   
   renderCountryList(item) {
@@ -33,9 +35,10 @@ class Home extends React.Component {
   }
   
   render() {
+    // console.log(this.state);
     return (
       <div className="row">
-        <div className="col-xs-12 col-md-8 col-md-offset-2">
+        <div className="col-xs-12 col-md-6 col-md-offset-3">
           <div className="title text-center">
             <h1>Vodafone Technical Test</h1>
             <h2>Celebrity Rich List</h2>
@@ -50,7 +53,7 @@ class Home extends React.Component {
                     placeholder="all"
                     onChange={this.handleChange.bind(this)}
                   >
-                    <option value="all">Show all</option>
+                    <option value="">Show all</option>
                     {this.props.countryList.map(this.renderCountryList)}
                   </FormControl>
                 </FormGroup>
@@ -73,7 +76,7 @@ class Home extends React.Component {
               <div className="col-xs-12 col-md-6">
                 <FormGroup controlId="searchText">
                   <ControlLabel>Search:</ControlLabel>
-                  <FormControl type="text" placeholder="Search" onChange={this.handleChange.bind(this)} />
+                  <FormControl type="text" placeholder="Search" onChange={this.handleChange.bind(this)}/>
                 </FormGroup>
               </div>
               <div className="col-xs-12 col-md-6">
@@ -91,6 +94,8 @@ class Home extends React.Component {
               </div>
             </div>
           </form>
+          <CelebrityList celebrities={this.props.celebrityList} countryFilter={this.state.selectedBirthplace}/>
+          {/*{this.props.celebrityList.map(this.renderCelebrity)}*/}
         </div>
       </div>
     )
@@ -99,7 +104,8 @@ class Home extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    countryList: state.data.countryList
+    countryList: state.data.countryList,
+    celebrityList: state.data.celebrityList
   }
 }
 
