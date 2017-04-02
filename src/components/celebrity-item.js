@@ -1,7 +1,6 @@
 import React from 'react';
 
-export default ({celebrities, countryFilter, nameFilter}) => {
-  console.log(countryFilter);
+export default ({celebrities, countryFilter, nameFilter, sortBy}) => {
   return (
     <div className="list-group">
       { celebrities
@@ -11,6 +10,17 @@ export default ({celebrities, countryFilter, nameFilter}) => {
         .filter((celebrity) =>
           celebrity.name.toLowerCase().indexOf(nameFilter) > -1
         )
+        .sort((a, b) => {
+          if (sortBy === 'name') {
+            const nameA = a[sortBy].toUpperCase();
+            const nameB = b[sortBy].toUpperCase();
+            return (nameA < nameB) ? -1
+              : (nameA > nameB) ? 1
+                : 0;
+          } else {
+            return a[sortBy] - b[sortBy];
+          }
+        })
         .map((celebrity, i) =>
           <div key={i} className="list-group-item">
             <div className="row">

@@ -12,7 +12,7 @@ class Home extends React.Component {
     this.state = {
       selectedBirthplace: '',
       selectedCurrency: '',
-      selectedOrder: '',
+      selectedOrder: 'rank',
       searchText: ''
     }
   }
@@ -88,7 +88,8 @@ class Home extends React.Component {
                     onChange={this.handleChange.bind(this)}
                   >
                     <option value="rank">Rank</option>
-                    <option value="other">...</option>
+                    <option value="age">Age</option>
+                    <option value="name">Name</option>
                   </FormControl>
                 </FormGroup>
               </div>
@@ -98,6 +99,7 @@ class Home extends React.Component {
             celebrities={this.props.celebrityList}
             countryFilter={this.state.selectedBirthplace}
             nameFilter={this.state.searchText}
+            sortBy={this.state.selectedOrder}
           />
           {/*{this.props.celebrityList.map(this.renderCelebrity)}*/}
         </div>
