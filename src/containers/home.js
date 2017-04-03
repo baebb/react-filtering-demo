@@ -11,7 +11,7 @@ class Home extends React.Component {
     super(props);
     this.state = {
       selectedBirthplace: '',
-      selectedCurrency: '',
+      selectedCurrency: 'usd',
       selectedOrder: 'rank',
       searchText: ''
     }
