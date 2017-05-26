@@ -1,4 +1,4 @@
-# vodafone-react-challenge
+# react-filtering-demo
 
 ### Install
 ```sh
